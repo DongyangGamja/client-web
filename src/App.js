@@ -1,53 +1,29 @@
-import { Route, Routes, Link } from "react-router-dom"
-import Auth from "./components/auth"
+import { Route, Routes } from "react-router-dom"
 import Register from "./components/auth/Register"
-import Board from "./components/board"
 import Detail from "./components/board/Detail"
 import New from "./components/board/New"
 import Profile from "./components/profile"
-import Kcal from "./components/Kcal"
-import { useEffect, useState } from "react"
-
+import "./App.scss"
+import Home from "./components/home/Home"
+import Login from "./components/auth/Login"
+import Auth from "./components/auth/Auth"
+import List from "./components/board/List"
+import NewGamja from "./components/auth/NewGamja"
+// import Search from "./components/board/Search"
 function App() {
-  const [logined, setLogined] = useState(false)
-
-  useEffect(() => {
-    localStorage.getItem("accessToken") ? setLogined(true) : setLogined(false)
-  }, logined)
-
   return (
     <div>
-      <Link to={"/"}>
-        <h1>GAMJA</h1>
-      </Link>
-      {logined ? (
-        <button
-          onClick={() => {
-            localStorage.removeItem("accessToken")
-            window.location.replace("/")
-          }}
-        >
-          로그아웃
-        </button>
-      ) : (
-        <Link to={"/"}>
-          <button>로그인</button>
-        </Link>
-      )}
-      <Link to={"/profile"}>
-        <button>Profile</button>
-      </Link>
-      <Link to={"/kcal"}>
-        <button>칼로리 차트</button>
-      </Link>
       <Routes>
-        <Route path="/" element={<Auth />} />
+        {/* <Route path="/board/search" element={<Search />} /> */}
+        <Route path="/" element={<Home />} />
+        <Route path="/auth" element={<Auth />} />
+        <Route path="/auth/login" element={<Login />} />
         <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/gamja" element={<NewGamja />} />
         <Route path="/board/:id" element={<Detail />} />
         <Route path="/board/new" element={<New />} />
-        <Route path="/main" element={<Board />} />
+        <Route path="/board" element={<List />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/kcal" element={<Kcal />} />
       </Routes>
     </div>
   )

@@ -1,18 +1,20 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
-import axios from "axios"
+import { axiosC } from "./../../axios"
+// import axios from "axios"
+import Head from "../home/Head"
 
 export default function Detail() {
   //members 상태 관리
   const [loading, setLoading] = useState(true)
-  const [board, setMember] = useState()
+  const [board, setBoard] = useState()
 
   const { id } = useParams()
 
   const getBoard = () => {
-    axios.get(`http://localhost:8001/api/board/${id}`).then((res) => {
-      setMember(res.data.board[0])
-      setLoading(false)
+    axiosC.get(`http://3.39.32.181:8001/api/board/${id}`).then((res) => {
+      setBoard(res.data.board[0])
+      setLoading((current) => !current)
     })
   }
 
@@ -22,16 +24,20 @@ export default function Detail() {
 
   return (
     <div>
-      <button>수정 버튼</button>
-      {loading ? (
-        <h1>loading..</h1>
-      ) : (
-        <div>
-          <h1>제목 : {board.title}</h1>
-          <h2>작성자 : {board.id}</h2>
-          <h2>내용 : {board.detail}</h2>
+      <Head />
+      <div className="board_detail">
+        <div className="small_box">
+          {loading ? null : (
+            <div className="map_box">
+              <h1>{board.b_title}</h1>
+              <h2 className="name">@ {board.u_name}</h2>
+              <div className="detail_box">
+                <h2 className="detail">{board.b_detail}</h2>
+              </div>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 }

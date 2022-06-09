@@ -1,15 +1,16 @@
 import { useState } from "react"
-import axios from "axios"
+import { axiosC } from "./../../axios"
+import { Link } from "react-router-dom"
+import logo from "./../public/logo_.jpg"
 
 export default function Login() {
   const [inputId, setInputId] = useState()
   const [inputPw, setInputPw] = useState()
 
   const getLogin = () => {
-    axios({
-      url: "http://localhost:8001/api/auth/login",
+    axiosC({
+      url: "http://3.39.32.181:8001/api/auth/login",
       method: "post",
-      withCredentials: true,
       data: {
         id: inputId,
         pw: inputPw,
@@ -18,7 +19,11 @@ export default function Login() {
       .then((res) => {
         if (res.data.result) {
           localStorage.setItem("accessToken", res.data.token)
-          window.location.replace("/main")
+          localStorage.setItem("loginId", res.data.info[1])
+          localStorage.setItem("loginName", res.data.info[0])
+          console.log(1, localStorage.getItem("loginName"))
+          window.alert(`안녕하세요! ${localStorage.getItem("loginName")}님`)
+          window.location.replace("/")
         } else {
           window.alert("로그인 실패")
         }
@@ -27,21 +32,24 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <h1>Login</h1>
-      <input
-        placeholder="ID"
-        type="text"
-        onChange={(e) => setInputId(e.target.value)}
-      />
-      <br />
-      <input
-        placeholder="PW"
-        type="password"
-        onChange={(e) => setInputPw(e.target.value)}
-      />
-      <br />
-      <button onClick={getLogin}>LOGIN</button>
+    <div className="login_box">
+      <div className="left_box">
+        <img src={logo} />
+      </div>
+      <div className="right_box">
+        <h1>Gamja Community</h1>
+        <h3>Login</h3>
+        <label className="input_id">
+          <h5>아이디</h5>
+          <input type="text" onChange={(e) => setInputId(e.target.value)} />
+        </label>
+        <label className="input_pw">
+          <h5>비밀번호</h5>
+          <input type="password" onChange={(e) => setInputPw(e.target.value)} />
+        </label>
+        <br />
+        <button onClick={getLogin}>로그인</button>
+      </div>
     </div>
   )
 }

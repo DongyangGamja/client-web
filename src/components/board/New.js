@@ -1,27 +1,26 @@
-import axios from "axios"
-import { useState } from "react"
+import { axiosC } from "../../axios"
+import { useEffect, useState } from "react"
+import Head from "../home/Head"
+import { CKEditor } from "@ckeditor/ckeditor5-react"
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic"
 
 export default function New() {
   const [title, setTitle] = useState()
-  const [datail, setDatail] = useState()
+  const [detail, setDetail] = useState()
 
   const onClick = () => {
-    console.log(title + datail)
-    axios({
-      headers: {
-        accessToken: localStorage.getItem("accessToken"),
-      },
-      url: "http://localhost:8001/api/board/new",
+    axiosC({
+      url: "http://3.39.32.181:8001/api/board/new",
       method: "post",
       data: {
-        id: "admin",
+        id: localStorage.getItem("loginId"),
         title: title,
-        detail: datail,
+        detail: detail,
       },
     }).then((res) => {
       if (res.data.result) {
         window.alert("게시글 생성 성공")
-        window.location.replace("/main")
+        window.location.replace("/board")
       } else {
         window.alert("게시글 실패, 다시 하세요.")
       }
@@ -30,10 +29,20 @@ export default function New() {
 
   return (
     <div>
-      <h1>New Content</h1>
-      TITLE : <input type="text" onChange={(e) => setTitle(e.target.value)} />
-      DETAIL : <input type="text" onChange={(e) => setDatail(e.target.value)} />
-      <button onClick={onClick}>CREATE</button>
+      <Head />
+      <div>
+        <h1>New Content</h1>
+        <input placeholder="Title" onChange={(e) => setTitle(e.target.value)} />
+        <CKEditor
+          editor={ClassicEditor}
+          data="<p>Hello world</p>"
+          onChange={(event, editor) => {
+            const data = editor.getData().replace(/<(\/p|p)([^>]*)>/gi, "")
+            setDetail(data)
+          }}
+        />
+        <button onClick={onClick}>CREATE</button>
+      </div>
     </div>
   )
 }
