@@ -1,6 +1,11 @@
 import bigImage from "./../public/2.jpg"
 import Head from "./Head"
 
+/**
+ * URL : /
+ * 메인 창
+ *  */
+
 export default function Home() {
   return (
     <div>

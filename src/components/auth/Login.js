@@ -2,11 +2,11 @@ import { useState } from "react"
 import { axiosC } from "./../../axios"
 import logo from "./../public/logo_.jpg"
 /**
- * URL : /auth
+ * URL : /auth/login
  * 로그인, 회원 가입 선택
  *  */
 export default function Login() {
-  // ID, PW STATE 관리
+  // ID, PW State 관리
   const [inputId, setInputId] = useState()
   const [inputPw, setInputPw] = useState()
 

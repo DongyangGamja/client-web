@@ -15,15 +15,14 @@ export default function Menu() {
   const id = localStorage.getItem("loginId")
 
   useEffect(() => {
-    axiosC.get(`http://3.39.32.181:8001/api/profile/menu/${id}`).then((res) => {
+    axiosC.get(`http://3.39.32.181:8001/api/kcal/${id}`).then((res) => {
       setData(res.data.data) //data 저장
       setLoading(false) // Loading End
     })
   }, [])
-
   // 음식 종류 number to String
-  const menuName = (m_kind) => {
-    switch (m_kind) {
+  const menuName = (m) => {
+    switch (m) {
       case 1:
         return "사과"
       case 2:

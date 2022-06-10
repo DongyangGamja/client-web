@@ -13,8 +13,9 @@ export default function Info() {
 
   // 계정 정보(id) 추출하여 id에 저장
   const id = localStorage.getItem("loginId")
+
   useEffect(() => {
-    axiosC(`http://3.39.32.181:8001/api/profile/${id}`).then((res) => {
+    axiosC.get(`http://3.39.32.181:8001/api/auth/${id}`).then((res) => {
       setData(res.data.data[0]) // data 저장
       setLoading(false) // Loading End
     })

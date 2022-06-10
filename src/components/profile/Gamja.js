@@ -15,12 +15,10 @@ export default function Gamja() {
   const id = localStorage.getItem("loginId")
 
   useEffect(() => {
-    axiosC
-      .get(`http://3.39.32.181:8001/api/profile/gamja/${id}`)
-      .then((res) => {
-        setData(res.data.data[0]) //감자 정보 저장
-        setLoading(false) //Loading End
-      })
+    axiosC.get(`http://3.39.32.181:8001/api/gamja/${id}`).then((res) => {
+      setData(res.data.data[0]) //감자 정보 저장
+      setLoading(false) //Loading End
+    })
   }, [])
   return (
     <div className="gamja">

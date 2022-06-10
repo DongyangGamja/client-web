@@ -17,7 +17,7 @@ export default function New() {
   // Btn Click -> axiosC 이용한 게시글 생성 요청
   const postNewBoard = () => {
     axiosC({
-      url: "http://3.39.32.181:8001/api/board/new",
+      url: "http://3.39.32.181:8001/api/board",
       method: "post",
       data: {
         id: localStorage.getItem("loginId"), // 계정 정보(ID)

@@ -15,12 +15,10 @@ export default function MyBoard() {
   const id = localStorage.getItem("loginId")
 
   useEffect(() => {
-    axiosC
-      .get(`http://3.39.32.181:8001/api/profile/board/${id}`)
-      .then((res) => {
-        setData(res.data.data) // Data 설정
-        setLoading(false) // Loading End
-      })
+    axiosC.get(`http://3.39.32.181:8001/api/board/user/${id}`).then((res) => {
+      setData(res.data.data) // Data 설정
+      setLoading(false) // Loading End
+    })
   }, [])
 
   return (

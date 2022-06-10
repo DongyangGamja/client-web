@@ -1,12 +1,18 @@
 import logo from "./../public/logo_.jpg"
 import { Link } from "react-router-dom"
 import { axiosC } from "../../axios"
+import { useEffect, useState } from "react"
 /**
  * URL : *
  * Head 상단 고정 Component
  *  */
 
 export default function Head() {
+  const [logined, setLogined] = useState(false)
+
+  useEffect(() => {
+    localStorage.getItem("accessToken") ? setLogined(true) : setLogined(false)
+  }, [logined])
   // Profile 클릭 시, JWT 검증 후 페이지 이동
   const getJwtCheck = () => {
     // JWT 여부에 따른 분기 처리
@@ -51,14 +57,14 @@ export default function Head() {
           <li>Content</li>
         </Link>
         <li onClick={getJwtCheck}>Profile</li>
-        {localStorage.getItem("accessToken") ? (
+        {logined ? (
           <li onClick={clickLogout}>Logout</li>
         ) : (
           <Link to={"/auth"}>
             <li>LOGIN</li>
           </Link>
         )}
-        {localStorage.getItem("accessToken") ? (
+        {logined ? (
           <li>{localStorage.getItem("loginName")}님</li>
         ) : (
           <li>게스트</li>
