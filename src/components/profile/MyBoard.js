@@ -2,20 +2,25 @@ import { axiosC } from "../../axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
+/**
+ * URL : /profile
+ * 칼로리 정보 컴포넌트
+ *  */
 export default function MyBoard() {
-  const [loading, setLoading] = useState(true)
+  // data(게시글), loading State 관리
   const [data, setData] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  // 계정 정보(ID)를 변수 id에 저장
+  const id = localStorage.getItem("loginId")
 
   useEffect(() => {
-    axiosC({
-      url: `http://3.39.32.181:8001/api/profile/board/${localStorage.getItem(
-        "loginId"
-      )}`,
-      method: "get",
-    }).then((res) => {
-      setData(res.data.data)
-      setLoading(false)
-    })
+    axiosC
+      .get(`http://3.39.32.181:8001/api/profile/board/${id}`)
+      .then((res) => {
+        setData(res.data.data) // Data 설정
+        setLoading(false) // Loading End
+      })
   }, [])
 
   return (

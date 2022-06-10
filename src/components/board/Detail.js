@@ -1,8 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { axiosC } from "./../../axios"
-// import axios from "axios"
 import Head from "../home/Head"
+/**
+ * URL : /board/:id
+ * 게시글 상세 페이지
+ *  */
 
 export default function Detail() {
   //members 상태 관리

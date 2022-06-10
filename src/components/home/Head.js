@@ -1,29 +1,42 @@
 import logo from "./../public/logo_.jpg"
 import { Link } from "react-router-dom"
 import { axiosC } from "../../axios"
+/**
+ * URL : *
+ * Head 상단 고정 Component
+ *  */
 
 export default function Head() {
-  const clickProfile = () => {
+  // Profile 클릭 시, JWT 검증 후 페이지 이동
+  const getJwtCheck = () => {
+    // JWT 여부에 따른 분기 처리
     if (localStorage.getItem("accessToken")) {
       axiosC.get("http://3.39.32.181:8001/jwt").then((res) => {
+        // JWT 인증 실패 분기
         if (!res.data.result) {
           window.alert("로그인 하세요!")
-          window.location.replace("/auth")
+          window.location.replace("/auth") // 로그인 페이지 이동
         } else {
-          window.location.replace("/profile")
+          // JWT 인증 성공 분기
+          window.location.replace("/profile") // Profile 페이지 이동
         }
       })
     } else {
+      // JWT 보유 X 분기
       window.alert("로그인 하세요!")
-      window.location.replace("/auth")
+      window.location.replace("/auth") // 로그인 페이지 이동
     }
   }
+  // Logout Click -> logout
   const clickLogout = () => {
+    // 보유한 계정 정보 전부 삭제
     localStorage.removeItem("accessToken")
     localStorage.removeItem("loginId")
     localStorage.removeItem("loginName")
+    // 메인 창으로 재이동
     window.location.replace("/")
   }
+  // 로그인 여부에 따른 분기 처리
   return (
     <div className="head">
       <div className="head_logo">
@@ -37,7 +50,7 @@ export default function Head() {
         <Link to={"/board"}>
           <li>Content</li>
         </Link>
-        <li onClick={clickProfile}>Profile</li>
+        <li onClick={getJwtCheck}>Profile</li>
         {localStorage.getItem("accessToken") ? (
           <li onClick={clickLogout}>Logout</li>
         ) : (

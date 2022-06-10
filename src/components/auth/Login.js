@@ -1,13 +1,17 @@
 import { useState } from "react"
 import { axiosC } from "./../../axios"
-import { Link } from "react-router-dom"
 import logo from "./../public/logo_.jpg"
-
+/**
+ * URL : /auth
+ * 로그인, 회원 가입 선택
+ *  */
 export default function Login() {
+  // ID, PW STATE 관리
   const [inputId, setInputId] = useState()
   const [inputPw, setInputPw] = useState()
 
-  const getLogin = () => {
+  // Btn click -> axiosC Login Post 요청
+  const postLogin = () => {
     axiosC({
       url: "http://3.39.32.181:8001/api/auth/login",
       method: "post",
@@ -17,14 +21,16 @@ export default function Login() {
       },
     })
       .then((res) => {
+        //Login 성공
         if (res.data.result) {
-          localStorage.setItem("accessToken", res.data.token)
-          localStorage.setItem("loginId", res.data.info[1])
-          localStorage.setItem("loginName", res.data.info[0])
-          console.log(1, localStorage.getItem("loginName"))
-          window.alert(`안녕하세요! ${localStorage.getItem("loginName")}님`)
-          window.location.replace("/")
-        } else {
+          localStorage.setItem("accessToken", res.data.token) // JWT 저장, (key : value) 형식
+          localStorage.setItem("loginId", res.data.info[1]) // 계정 정보(id) 저장
+          localStorage.setItem("loginName", res.data.info[0]) // 계정 정보(이름) 저장
+          window.alert(`안녕하세요! ${localStorage.getItem("loginName")}님`) // 계정 정보(이름) 이용
+          window.location.replace("/") // 기본 경로로 이동
+        }
+        //Login 실패
+        else {
           window.alert("로그인 실패")
         }
       })
@@ -48,7 +54,7 @@ export default function Login() {
           <input type="password" onChange={(e) => setInputPw(e.target.value)} />
         </label>
         <br />
-        <button onClick={getLogin}>로그인</button>
+        <button onClick={postLogin}>로그인</button>
       </div>
     </div>
   )

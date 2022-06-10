@@ -1,5 +1,9 @@
 import { Link } from "react-router-dom"
 import logo from "./../public/logo_.jpg"
+/**
+ * URL : /auth
+ * 로그인, 회원 가입 선택
+ *  */
 export default function Auth() {
   return (
     <div className="auth_box">
